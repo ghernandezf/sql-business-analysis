@@ -1,0 +1,14 @@
+-- Objetivo: SOLO CONTEOS acumulados por país (sin porcentajes)
+SELECT
+  country,
+  COUNT( DISTINCT CASE WHEN active = 1 AND day_after_signup >=7 THEN user_id END) AS users_d7,
+  -- Cuenta usuarios activos → users_d14,
+    COUNT( DISTINCT CASE WHEN active = 1 AND day_after_signup >=14 THEN user_id END) AS users_d14,
+  -- Cuenta usuarios activos → users_d21,
+    COUNT( DISTINCT CASE WHEN active = 1 AND day_after_signup >=21 THEN user_id END) AS users_d21,
+  -- Cuenta usuarios activos → users_d28,
+    COUNT( DISTINCT CASE WHEN active = 1 AND day_after_signup >=28 THEN user_id END) AS users_d28
+FROM mercadolibre_retention
+WHERE activity_date BETWEEN '2025-01-01' AND '2025-08-31' 
+GROUP BY country
+ORDER BY country

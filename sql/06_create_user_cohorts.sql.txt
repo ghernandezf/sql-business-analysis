@@ -1,0 +1,14 @@
+-- OBJETIVO: Asignar a cada usuario su cohorte de registro en formato YYYY-MM
+SELECT
+-- ESTRATEGIA:
+--   1) Agrupa por usuario
+    user_id,
+--   2) Tomar la PRIMERA fecha de registro por usuario: MIN(signup_date)
+    MIN(signup_date),
+--   3) Truncar al mes y formatear: TO_CHAR(DATE_TRUNC('month', MIN(signup_date::date)), 'YYYY-MM')
+    TO_CHAR(DATE_TRUNC('month', MIN(signup_date)),'YYYY-MM') AS cohort
+FROM mercadolibre_retention
+--   4) Agrupa por usuario
+GROUP BY user_id
+--   5) Entregar 5 filas para validar
+LIMIT 5;
